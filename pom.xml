@@ -82,6 +82,16 @@
 					</resource>
 				</resources>
 			</build>
+			<repositories>
+				<repository>
+					<id>ebi-repo-snapshots</id>
+					<name>EBI Repo Snapshots</name>
+					<url>http://www.ebi.ac.uk/~maven/m2repo_snapshots</url>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
 			<dependencies>
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
@@ -112,6 +122,13 @@
 					</resource>
 				</resources>
 			</build>
+			<repositories>
+				<repository>
+					<id>ebi-repo</id>
+					<name>EBI repo</name>
+					<url>http://www.ebi.ac.uk/~maven/m2repo</url>
+				</repository>
+			</repositories>
 			<dependencies>
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
