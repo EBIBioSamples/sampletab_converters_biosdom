@@ -24,6 +24,8 @@ import uk.ac.ebi.fg.biosd.model.application_mgmt.JobRegisterEntry;
 import uk.ac.ebi.fg.biosd.model.application_mgmt.JobRegisterEntry.Operation;
 import uk.ac.ebi.fg.biosd.model.organizational.MSI;
 import uk.ac.ebi.fg.biosd.model.persistence.hibernate.application_mgmt.JobRegisterDAO;
+import uk.ac.ebi.fg.core_model.resources.Resources;
+
 import com.jolbox.bonecp.BoneCPDataSource;
 
 /**
@@ -42,16 +44,8 @@ public class JobRegistry {
 	}
 
 	public void getJobRegistry() throws SQLException, IOException {
-		/**EntityManagerFactory emf = Resources.getInstance()
-				.getEntityManagerFactory();*/
-		
-		Properties hibernateProperties = new Properties ();
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		hibernateProperties.load ( loader.getResourceAsStream ( "hibernate_bioSD.properties"));
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory ( "defaultPersistenceUnit" , hibernateProperties);
-		//new DbSchemaEnhancerProcessor ( entityManagerFactory ).enhance ();
-		EntityManager em = emf.createEntityManager();
-
+        EntityManagerFactory emf = Resources.getInstance ().getEntityManagerFactory ();        
+        EntityManager em = emf.createEntityManager();
 		JobRegisterDAO jrDao = new JobRegisterDAO(em);
 
 		List<JobRegisterEntry> logs = jrDao.find(60, MSI.class);
