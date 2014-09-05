@@ -44,9 +44,7 @@ public class JobRegistry {
 	}
 
 	public void getJobRegistry() throws SQLException, IOException {
-        EntityManagerFactory emf = Resources.getInstance ().getEntityManagerFactory ();        
-        EntityManager em = emf.createEntityManager();
-		JobRegisterDAO jrDao = new JobRegisterDAO(em);
+		JobRegisterDAO jrDao = new JobRegisterDAO(Resources.getInstance().getEntityManagerFactory().createEntityManager());
 
 		List<JobRegisterEntry> logs = jrDao.find(60, MSI.class);
 		

@@ -50,23 +50,9 @@ public class DbMapDriver extends AbstractDriver {
             return;
         }
 
-        EntityManagerFactory emf = Resources.getInstance ().getEntityManagerFactory ();
-        
-
-//        Properties hibernateProperties = new Properties ();
-//        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-//        try {
-//            hibernateProperties.load ( loader.getResourceAsStream ( "hibernate_bioSD.properties"));
-//        } catch (IOException e) {
-//            log.error("unable to read hibernate_bioSD.properties", e);
-//            return;
-//        }
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory ( "defaultPersistenceUnit" , hibernateProperties);
-        
-        EntityManager em = emf.createEntityManager();
+        EntityManager em =  Resources.getInstance().getEntityManagerFactory().createEntityManager();
         EntityTransaction tns = em.getTransaction();
-
-        ExpPropValDAO expPropValDAO = new ExpPropValDAO( em );
+        ExpPropValDAO expPropValDAO = new ExpPropValDAO(em);
         
         tns.begin ();
 

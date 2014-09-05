@@ -63,10 +63,7 @@ public class DeletedListDriver extends AbstractDriver  {
             return;
         }
 
-        EntityManagerFactory emf = Resources.getInstance ().getEntityManagerFactory ();
-        EntityManager em = emf.createEntityManager();
-        JobRegisterDAO jrDao = new JobRegisterDAO(em);
-        
+        JobRegisterDAO jrDao = new JobRegisterDAO(Resources.getInstance().getEntityManagerFactory().createEntityManager());       
 
         Writer writer = null;
         try {
