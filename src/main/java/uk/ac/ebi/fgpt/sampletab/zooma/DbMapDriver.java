@@ -51,8 +51,8 @@ public class DbMapDriver extends AbstractDriver {
         }
 
         EntityManager em =  Resources.getInstance().getEntityManagerFactory().createEntityManager();
-        EntityTransaction tns = em.getTransaction();
         ExpPropValDAO expPropValDAO = new ExpPropValDAO(em);
+        EntityTransaction tns = em.getTransaction();
         
         tns.begin ();
 
