@@ -8,6 +8,8 @@ import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +21,10 @@ import org.slf4j.LoggerFactory;
 
 import uk.ac.ebi.fg.biosd.model.application_mgmt.JobRegisterEntry;
 import uk.ac.ebi.fg.biosd.model.application_mgmt.JobRegisterEntry.Operation;
+import uk.ac.ebi.fg.biosd.model.expgraph.BioSample;
+import uk.ac.ebi.fg.biosd.model.organizational.MSI;
 import uk.ac.ebi.fg.biosd.model.persistence.hibernate.application_mgmt.JobRegisterDAO;
+import uk.ac.ebi.fg.core_model.persistence.dao.hibernate.toplevel.AccessibleDAO;
 import uk.ac.ebi.fg.core_model.resources.Resources;
 import uk.ac.ebi.fgpt.sampletab.AbstractDriver;
 import uk.ac.ebi.fgpt.sampletab.subs.JobRegistryDriver;
@@ -63,12 +68,16 @@ public class DeletedListDriver extends AbstractDriver  {
             return;
         }
 
-        JobRegisterDAO jrDao = new JobRegisterDAO(Resources.getInstance().getEntityManagerFactory().createEntityManager());       
+        EntityManager em = Resources.getInstance().getEntityManagerFactory().createEntityManager();
+        
+        JobRegisterDAO jrDao = new JobRegisterDAO(em);   
+        
+        AccessibleDAO<BioSample> biosampleDAO = new AccessibleDAO<BioSample>(BioSample.class, em);    
 
         Writer writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(outputFile));
-            process(jrDao, writer);
+            process(jrDao, biosampleDAO, writer);
         } catch (IOException e) {
             log.error("Unable to open "+outputFile+" for writing", e);
             return;
@@ -83,11 +92,33 @@ public class DeletedListDriver extends AbstractDriver  {
         }        
     }
     
-    private void process (JobRegisterDAO jrDao, Writer writer) throws IOException {
-        for (JobRegisterEntry e : jrDao.find(fromDate, toDate, "BioSample", Operation.DELETE ) ) {
-            writer.write(e.getAcc());
-            writer.write("\n");
+    private void process (JobRegisterDAO jrDao, AccessibleDAO<BioSample> biosampleDAO, Writer writer) throws IOException {        
+        Map<String, Integer> counterMap = new HashMap<String, Integer>();
+        for (JobRegisterEntry e : jrDao.find(fromDate, toDate, "BioSample") ) {
+            if (!counterMap.containsKey(e.getAcc())) {
+                counterMap.put(e.getAcc(), 0);
+            }
+            if (e.getOperation() == Operation.DELETE) {
+                counterMap.put(e.getAcc(), counterMap.get(e.getAcc())-1);
+            } else if (e.getOperation() == Operation.ADD) {
+                counterMap.put(e.getAcc(), counterMap.get(e.getAcc())+1);
+            }
         }
+        
+        //all the entries in counterMap with a value of 0 or lower MAY
+        //have been removed or been made private via release date update(s)
+        Date now = new Date();
+        
+        for (String acc : counterMap.keySet()) {
+            if (counterMap.get(acc) <= 0) {
+                BioSample bs = biosampleDAO.find(acc);
+                //if it is no longer in the database, or its release date is in the future
+                if (bs == null || bs.getReleaseDate().after(now)) {
+                    writer.write(acc+"\n");
+                }
+            }
+        }
+        
     }
     
     
