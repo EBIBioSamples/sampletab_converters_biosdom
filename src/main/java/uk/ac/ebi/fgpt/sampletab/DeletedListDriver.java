@@ -92,12 +92,19 @@ public class DeletedListDriver extends AbstractDriver  {
         }        
     }
     
-    private void process (JobRegisterDAO jrDao, AccessibleDAO<BioSample> biosampleDAO, Writer writer) throws IOException {        
+    private void process (JobRegisterDAO jrDao, AccessibleDAO<BioSample> biosampleDAO, Writer writer) throws IOException {     
+        if (jrDao == null) throw new IllegalArgumentException("jrDao must not be null");
+        if (biosampleDAO == null) throw new IllegalArgumentException("biosampleDAO must not be null");
+        if (writer == null) throw new IllegalArgumentException("writer must not be null");        
+        
         Map<String, Integer> counterMap = new HashMap<String, Integer>();
         for (JobRegisterEntry e : jrDao.find(fromDate, toDate, "BioSample") ) {
+            if (e.getAcc() == null) continue;
+            
             if (!counterMap.containsKey(e.getAcc())) {
                 counterMap.put(e.getAcc(), 0);
             }
+            
             if (e.getOperation() == Operation.DELETE) {
                 counterMap.put(e.getAcc(), counterMap.get(e.getAcc())-1);
             } else if (e.getOperation() == Operation.ADD) {
