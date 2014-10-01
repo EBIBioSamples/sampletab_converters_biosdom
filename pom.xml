@@ -17,20 +17,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<distributionManagement>
-		<repository>
-			<id>coconut.ebi.ac.uk-releases</id>
-			<name>coconut.ebi.ac.uk-releases</name>
-			<url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo</url>
-		</repository>
-		<snapshotRepository>
-			<id>coconut.ebi.ac.uk-snapshots</id>
-			<name>coconut.ebi.ac.uk.ebi.ac.uk-snapshots</name>
-			<url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo</url>
-		</snapshotRepository>
-	</distributionManagement>
-
-
 	<!-- Git connection -->
 	<scm>
 		<connection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</connection>
@@ -38,16 +24,6 @@
 	</scm>
 
 	<repositories>
-		<!-- internal repository -->
-		<repository>
-			<id>coconut.ebi.ac.uk-snapshots</id>
-			<name>Coconut Snapshot Repository</name>
-			<url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		
 		<repository> 
 			<id>ebi-repo</id> 
 			<name>EBI repo</name> 
