@@ -122,6 +122,13 @@ public class DeletedListDriver extends AbstractDriver  {
                 Date releaseDate = bs.getReleaseDate();
                 if (releaseDate == null){
                     log.warn("Sample "+acc+" has a null release date");
+                    //TODO handle this better once MSI resolution is solved
+                    for (MSI msi : bs.getMSIs()) {
+                        if (msi.getReleaseDate() != null 
+                                && (releaseDate == null || releaseDate.after(msi.getReleaseDate()))) {
+                            releaseDate = msi.getReleaseDate();
+                        }
+                    }
                 }
                 //if it is no longer in the database, or its release date is in the future
                 if (bs == null || now.before(releaseDate)) {
