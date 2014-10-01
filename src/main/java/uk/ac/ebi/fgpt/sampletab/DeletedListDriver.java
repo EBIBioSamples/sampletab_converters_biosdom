@@ -119,8 +119,12 @@ public class DeletedListDriver extends AbstractDriver  {
         for (String acc : counterMap.keySet()) {
             if (counterMap.get(acc) <= 0) {
                 BioSample bs = biosampleDAO.find(acc);
+                Date releaseDate = bs.getReleaseDate();
+                if (releaseDate == null){
+                    log.warn("Sample "+acc+" has a null release date");
+                }
                 //if it is no longer in the database, or its release date is in the future
-                if (bs == null || bs.getReleaseDate().after(now)) {
+                if (bs == null || now.before(releaseDate)) {
                     writer.write(acc+"\n");
                 }
             }
