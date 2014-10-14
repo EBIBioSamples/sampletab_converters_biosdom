@@ -34,7 +34,9 @@
 			<id>ebi-repo-snapshots</id> 
 			<name>EBI Repo Snapshots</name> 
 			<url>http://www.ebi.ac.uk/~maven/m2repo_snapshots</url> 
-			<snapshots><enabled>true</enabled></snapshots> 
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots> 
 		</repository>
 		
 		<!-- Use the coconut repository for now as hasbanana is down -->    
@@ -101,6 +103,18 @@
 					<groupId>uk.ac.ebi.fgpt</groupId>
 					<artifactId>sampletab-converters</artifactId>
 					<version>1.0.14-SNAPSHOT</version>
+					<exclusions>
+						<exclusion>
+							<groupId>net.sourceforge.fluxion</groupId>
+							<artifactId>fluxion-spi</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				
+				<dependency>
+					<groupId>net.sourceforge.fluxion</groupId>
+					<artifactId>fluxion-spi</artifactId>
+					<version>1.0-alpha-3</version>
 				</dependency>
 				
 
@@ -140,6 +154,18 @@
 					<groupId>uk.ac.ebi.fgpt</groupId>
 					<artifactId>sampletab-converters</artifactId>
 					<version>1.0.13</version>
+					<exclusions>
+						<exclusion>
+							<groupId>net.sourceforge.fluxion</groupId>
+							<artifactId>fluxion-spi</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				
+				<dependency>
+					<groupId>net.sourceforge.fluxion</groupId>
+					<artifactId>fluxion-spi</artifactId>
+					<version>1.0-alpha-3</version>
 				</dependency>
 				
 
@@ -173,17 +199,18 @@
 					<groupId>uk.ac.ebi.fgpt</groupId>
 					<artifactId>sampletab-converters</artifactId>
 					<version>1.0.14-SNAPSHOT</version>
-					
-			        <exclusions>
-			            <exclusion>
-						    <groupId>org.jboss.logging</groupId>
-						    <artifactId>jboss-logging</artifactId>
-			            </exclusion>
-			            <exclusion>
-							<groupId>commons-logging</groupId>
-							<artifactId>commons-logging</artifactId>
-			            </exclusion>
-			        </exclusions>
+					<exclusions>
+						<exclusion>
+							<groupId>net.sourceforge.fluxion</groupId>
+							<artifactId>fluxion-spi</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				
+				<dependency>
+					<groupId>net.sourceforge.fluxion</groupId>
+					<artifactId>fluxion-spi</artifactId>
+					<version>1.0-alpha-3</version>
 				</dependency>
 
 				<!--Biosd Model for Jobs-registry subs tracking -->
