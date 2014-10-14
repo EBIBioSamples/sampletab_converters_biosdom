@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -41,12 +42,10 @@
 	        <id>coconut.ebi.ac.uk</id>
 	        <name>coconut.ebi.ac.uk-releases</name>
 	        <url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 	    </repository>
-	    <snapshotRepository>
-	        <id>coconut.ebi.ac.uk</id>
-	        <name>coconut.ebi.ac.uk-snapshots</name>
-	        <url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo</url>
-	    </snapshotRepository>
 	</repositories>
 
 	<dependencies>
