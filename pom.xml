@@ -25,29 +25,48 @@
 	</scm>
 
 	<repositories>
-		<repository> 
-			<id>ebi-repo</id> 
-			<name>EBI repo</name> 
-			<url>http://www.ebi.ac.uk/~maven/m2repo</url> 
-		</repository> 
-		<repository> 
-			<id>ebi-repo-snapshots</id> 
-			<name>EBI Repo Snapshots</name> 
-			<url>http://www.ebi.ac.uk/~maven/m2repo_snapshots</url> 
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots> 
-		</repository>
-		
-		<!-- Use the coconut repository for now as hasbanana is down -->    
 		<repository>
-	        <id>coconut.ebi.ac.uk</id>
-	        <name>coconut.ebi.ac.uk-releases</name>
-	        <url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo</url>
+			<id>oerc-repo</id>
+			<name>OeRC Maven repository</name>
+			<url>http://frog.oerc.ox.ac.uk:8080/nexus-2.1.2/content/repositories/releases/</url>
+		</repository>
+
+		<repository>
+			<id>ebi-repo</id>
+			<name>EBI Repository</name>
+			<url>http://www.ebi.ac.uk/~maven/m2repo/</url>
+		</repository>
+
+		<repository>
+			<id>ebi-repo-snapshot</id>
+			<name>EBI Repository</name>
+			<url>http://www.ebi.ac.uk/~maven/m2repo_snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-	    </repository>
+		</repository>
+
+		<repository>
+			<id>limpopo-repo</id>
+			<name>Limpopo Mini-SF Repository</name>
+			<url>http://limpopo.sourceforge.net/maven/repo</url>
+		</repository>
+
+		<repository>
+			<id>hasbanana-repo</id>
+			<url>http://www.hasbanana.com/maven/repo</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>coconut.ebi.ac.uk-snapshots</id>
+			<url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -149,6 +168,7 @@
 					</snapshots>
 				</repository>
 			</repositories>
+			
 			<dependencies>
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
