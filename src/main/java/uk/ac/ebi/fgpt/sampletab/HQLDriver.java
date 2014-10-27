@@ -2,6 +2,8 @@ package uk.ac.ebi.fgpt.sampletab;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.metamodel.Attribute;
+import javax.persistence.metamodel.EntityType;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
@@ -31,7 +33,14 @@ public class HQLDriver extends AbstractDriver {
 
         EntityManager em = Resources.getInstance().getEntityManagerFactory().createEntityManager();
 
-        Query q = em.createQuery( hql );
+        for (EntityType<?> et : em.getMetamodel().getEntities()) {
+            log.info("Entity name: "+et.getName());
+            for (Attribute<?,?> a : et.getAttributes()) {
+                log.info("  Attribute name: "+a.getName());
+            }
+        }
+        
+        Query q = em.createQuery(hql);
         q.setMaxResults(maxCount);
         
         for (Object r : q.getResultList()) {
