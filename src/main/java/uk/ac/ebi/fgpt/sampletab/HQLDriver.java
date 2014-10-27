@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.kohsuke.args4j.Argument;
+import org.kohsuke.args4j.Option;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,9 @@ public class HQLDriver extends AbstractDriver {
 
     @Argument(required=true, index=0, metaVar="HQL", usage = "statement to run")
     protected String hql;
+
+    @Option(name = "--max", aliases = { "-m" }, usage = "maximum number of results")
+    protected int maxCount = 100;
 
     
     private static Logger log =  LoggerFactory.getLogger(JobRegistryDriver.class); 
@@ -28,6 +32,7 @@ public class HQLDriver extends AbstractDriver {
         EntityManager em = Resources.getInstance().getEntityManagerFactory().createEntityManager();
 
         Query q = em.createQuery( hql );
+        q.setMaxResults(maxCount);
         
         for (Object r : q.getResultList()) {
             System.out.println(r);
