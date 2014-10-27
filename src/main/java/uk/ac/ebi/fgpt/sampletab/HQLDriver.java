@@ -32,6 +32,11 @@ public class HQLDriver extends AbstractDriver {
         for (Object r : q.getResultList()) {
             System.out.println(r);
         }
-        
+    }
+    
+    
+    public static void main(String[] args)  {
+        new HQLDriver().doMain(args);
+
     }
 }
