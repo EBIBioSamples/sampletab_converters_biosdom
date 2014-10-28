@@ -23,7 +23,7 @@ public class HQLDriver extends AbstractDriver {
     protected int maxCount = 100;
 
     
-    private static Logger log =  LoggerFactory.getLogger(JobRegistryDriver.class); 
+    private static Logger log =  LoggerFactory.getLogger(HQLDriver.class); 
 
     @Override
     public void doMain(String[] args) {
