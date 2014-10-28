@@ -98,4 +98,10 @@ public class RelationshipInverter extends AbstractDriver {
         
         return toReturn;
     }
+    
+
+    public static void main(String[] args)  {
+        new RelationshipInverter().doMain(args);
+
+    }
 }
