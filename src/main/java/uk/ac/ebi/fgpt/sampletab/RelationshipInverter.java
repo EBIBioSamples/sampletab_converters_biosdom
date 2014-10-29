@@ -61,7 +61,7 @@ public class RelationshipInverter extends AbstractDriver {
     
     private Set<List<String>> getDerivedFrom() {
         
-        Query q = em.createQuery("FROM BioSample bs INNER JOIN bs.propertyValues AS pv INNER JOIN pv.type AS pt WHERE pt = 'Derived From'");
+        Query q = em.createQuery("FROM BioSample bs INNER JOIN bs.propertyValues AS pv INNER JOIN pv.type AS pt WITH pt = 'Derived From'");
         
         List<BioSample> results = q.getResultList();
         Set<List<String>> toReturn = new HashSet<List<String>>();
@@ -81,7 +81,7 @@ public class RelationshipInverter extends AbstractDriver {
     
     private Set<List<String>> getDerivedTo() {
         
-        Query q = em.createQuery("FROM BioSample bs INNER JOIN bs.propertyValues AS pv INNER JOIN pv.type AS pt WHERE pt = 'Derived To'");
+        Query q = em.createQuery("FROM BioSample bs INNER JOIN bs.propertyValues AS pv INNER JOIN pv.type AS pt WITH pt = 'Derived To'");
         
         List<BioSample> results = q.getResultList();
         Set<List<String>> toReturn = new HashSet<List<String>>();
