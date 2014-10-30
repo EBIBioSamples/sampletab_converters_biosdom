@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import org.kohsuke.args4j.Option;
@@ -14,8 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.ac.ebi.fg.biosd.model.expgraph.BioSample;
+import uk.ac.ebi.fg.biosd.model.expgraph.properties.SampleCommentType;
+import uk.ac.ebi.fg.biosd.model.expgraph.properties.SampleCommentValue;
 import uk.ac.ebi.fg.core_model.expgraph.properties.ExperimentalPropertyType;
 import uk.ac.ebi.fg.core_model.expgraph.properties.ExperimentalPropertyValue;
+import uk.ac.ebi.fg.core_model.persistence.dao.hibernate.toplevel.AccessibleDAO;
 import uk.ac.ebi.fg.core_model.resources.Resources;
 
 public class RelationshipInverter extends AbstractDriver {
@@ -25,6 +29,9 @@ public class RelationshipInverter extends AbstractDriver {
     protected int maxCount = 1000;
     
     private EntityManager em = null;
+    
+    private static final String DERIVEDFROM = "Derived From";
+    private static final String DERIVEDTO = "Derived To";
 
     private static Logger log =  LoggerFactory.getLogger(RelationshipInverter.class); 
     
@@ -33,21 +40,52 @@ public class RelationshipInverter extends AbstractDriver {
         super.doMain(args);
 
         em = Resources.getInstance().getEntityManagerFactory().createEntityManager();
+        
+        EntityTransaction transaction = em.getTransaction();
+        //TEMP mark as only temporary
+        transaction.setRollbackOnly();
 
 //        Set<List<String>> derivedFroms = getDerivedFrom();
 //        Set<List<String>> derivedTos = getDerivedFrom();
+        
+        AccessibleDAO<BioSample> biosampleDAO = new AccessibleDAO<BioSample>(BioSample.class, em);
+        
         
         //get all derived from without an inverse
         for (String[] derivedFrom : getDerivedFromWithoutInverse() ) {
             //TODO create the inverses       
             log.info("TODO create "+derivedFrom[1]+" -> "+derivedFrom[0]);
+            
+            SampleCommentValue v = new SampleCommentValue(derivedFrom[0], new SampleCommentType(DERIVEDTO));
+            
+            BioSample bs = biosampleDAO.find(derivedFrom[1]);
+            if (bs == null) {
+                log.warn("Unable to retrieve "+derivedFrom[1]+" to add inverse to");
+            } else {
+                bs.addPropertyValue(v);
+                
+                biosampleDAO.mergeBean(bs);
+            }
         }
         
         //get all derived to without an inverse
         for (String[] derivedTo : getDerivedToWithoutInverse() ) {
             //TODO delete the derived to       
-            log.info("TODO delete "+derivedTo[1]+" -> "+derivedTo[0]);
+            log.info("TODO delete "+derivedTo[1]+" <- "+derivedTo[0]);
+                        
+            BioSample bs = biosampleDAO.find(derivedTo[1]);
+            for (ExperimentalPropertyValue v : Collections.unmodifiableCollection(bs.getPropertyValues())) {
+                if (v.getTermText().equals(derivedTo[0]) && v.getType().getTermText().equals(DERIVEDTO)) {
+                    bs.getPropertyValues().remove(v);
+                }
+            }
+            
+            biosampleDAO.mergeBean(bs);
         }
+        
+        //TEMP rollback the transaction
+        transaction.rollback();
+        
         em.close();
     }
     
