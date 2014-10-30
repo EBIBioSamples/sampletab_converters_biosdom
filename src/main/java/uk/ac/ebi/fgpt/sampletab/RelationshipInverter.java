@@ -38,29 +38,20 @@ public class RelationshipInverter extends AbstractDriver {
 //        Set<List<String>> derivedTos = getDerivedFrom();
         
         //get all derived from without an inverse
-        for (List<String> derivedFrom : getDerivedFromWithoutInverse() ) {
-            List<String> derivedTo = new ArrayList<String>(2);
-            derivedTo.set(0, derivedFrom.get(1));
-            derivedTo.set(1, derivedFrom.get(0));
+        for (String[] derivedFrom : getDerivedFromWithoutInverse() ) {
             //TODO create the inverses       
-            log.info("TODO create "+derivedTo.get(0)+" -> "+derivedTo.get(1));
+            log.info("TODO create "+derivedFrom[1]+" -> "+derivedFrom[0]);
         }
-/*
-        for (List<String> derivedTo : derivedTos) {
-            List<String> derivedFrom = new ArrayList<String>(2);
-            derivedFrom.set(0, derivedTo.get(1));
-            derivedFrom.set(1, derivedTo.get(0));
-            
-            if (derivedFroms.contains(derivedFrom)) {
-                //TODO delete the originals  
-                log.info("TODO delete "+derivedFrom.get(0)+" <- "+derivedFrom.get(1));
-            }
+        
+        //get all derived to without an inverse
+        for (String[] derivedTo : getDerivedToWithoutInverse() ) {
+            //TODO delete the derived to       
+            log.info("TODO delete "+derivedTo[1]+" -> "+derivedTo[0]);
         }
-*/
         em.close();
     }
     
-    private Set<List<String>> getDerivedFromWithoutInverse() {
+    private Set<String[]> getDerivedFromWithoutInverse() {
         
         Query q = em.createQuery("SELECT bs1.acc, str(pv1.termText) " +
         		"FROM BioSample bs1 INNER JOIN bs1.propertyValues AS pv1 INNER JOIN pv1.type AS pt1 " +
@@ -70,7 +61,7 @@ public class RelationshipInverter extends AbstractDriver {
         
         q.setMaxResults(maxCount);
         
-        return new HashSet<List<String>>(q.getResultList());
+        return new HashSet<String[]>(q.getResultList());
     }
     
     
@@ -94,7 +85,7 @@ public class RelationshipInverter extends AbstractDriver {
         return toReturn;
     }
     
-    private Set<List<String>> getDerivedToWithoutInverse() {
+    private Set<String[]> getDerivedToWithoutInverse() {
         
         Query q = em.createQuery("SELECT bs1.acc, str(pv1.termText) " +
                 "FROM BioSample bs1 INNER JOIN bs1.propertyValues AS pv1 INNER JOIN pv1.type AS pt1 " +
@@ -104,7 +95,7 @@ public class RelationshipInverter extends AbstractDriver {
         
         q.setMaxResults(maxCount);
         
-        return new HashSet<List<String>>(q.getResultList());
+        return new HashSet<String[]>(q.getResultList());
     }
     
     private Set<List<String>> getDerivedTo() {
