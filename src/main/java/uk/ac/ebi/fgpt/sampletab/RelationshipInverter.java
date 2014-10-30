@@ -61,7 +61,13 @@ public class RelationshipInverter extends AbstractDriver {
         
         q.setMaxResults(maxCount);
         
-        return new HashSet<String[]>(q.getResultList());
+        Set<String[]> toReturn = new HashSet<String[]>();
+        for (Object result : q.getResultList()) {
+            String[] b = (String[]) result;
+            toReturn.add(b);
+        }
+        
+        return toReturn;
     }
     
     
@@ -95,7 +101,13 @@ public class RelationshipInverter extends AbstractDriver {
         
         q.setMaxResults(maxCount);
         
-        return new HashSet<String[]>(q.getResultList());
+        Set<String[]> toReturn = new HashSet<String[]>();
+        for (Object result : q.getResultList()) {
+            String[] b = (String[]) result;
+            toReturn.add(b);
+        }
+        
+        return toReturn;
     }
     
     private Set<List<String>> getDerivedTo() {
