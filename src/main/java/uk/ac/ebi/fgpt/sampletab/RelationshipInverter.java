@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.kohsuke.args4j.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,9 @@ import uk.ac.ebi.fg.core_model.resources.Resources;
 
 public class RelationshipInverter extends AbstractDriver {
 
+
+    @Option(name = "--max", aliases = { "-m" }, usage = "maximum number of attributes to create/delete at once")
+    protected int maxCount = 1000;
     
     private EntityManager em = null;
 
@@ -30,21 +34,18 @@ public class RelationshipInverter extends AbstractDriver {
 
         em = Resources.getInstance().getEntityManagerFactory().createEntityManager();
 
-        Set<List<String>> derivedFroms = getDerivedFrom();
-        Set<List<String>> derivedTos = getDerivedFrom();
+//        Set<List<String>> derivedFroms = getDerivedFrom();
+//        Set<List<String>> derivedTos = getDerivedFrom();
         
         //get all derived from without an inverse
-        for (List<String> derivedFrom : derivedFroms) {
+        for (List<String> derivedFrom : getDerivedFromWithoutInverse() ) {
             List<String> derivedTo = new ArrayList<String>(2);
             derivedTo.set(0, derivedFrom.get(1));
             derivedTo.set(1, derivedFrom.get(0));
-            
-            if (!derivedTos.contains(derivedTo)) {
-                //TODO create the inverses       
-                log.info("TODO create "+derivedTo.get(0)+" -> "+derivedTo.get(1));
-            }
+            //TODO create the inverses       
+            log.info("TODO create "+derivedTo.get(0)+" -> "+derivedTo.get(1));
         }
-
+/*
         for (List<String> derivedTo : derivedTos) {
             List<String> derivedFrom = new ArrayList<String>(2);
             derivedFrom.set(0, derivedTo.get(1));
@@ -55,13 +56,26 @@ public class RelationshipInverter extends AbstractDriver {
                 log.info("TODO delete "+derivedFrom.get(0)+" <- "+derivedFrom.get(1));
             }
         }
-                
+*/
         em.close();
     }
+    private Set<List<String>> getDerivedFromWithoutInverse() {
+        
+        Query q = em.createQuery("SELECT bs1.acc, str(pv1.termText) " +
+        		"FROM BioSample bs1 INNER JOIN bs1.propertyValues AS pv1 INNER JOIN pv1.type AS pt1 " +
+        		"WHERE pt1.termText = 'Derived From' AND bs1.acc NOT IN " +
+        		"( SELECT str(pv2.termText) FROM BioSample bs2 INNER JOIN bs2.propertyValues AS pv2 INNER JOIN pv2.type AS pt2 " +
+        		"WHERE str(pt2.termText) = 'Derived To' )");
+        
+        q.setMaxResults(maxCount);
+        
+        return new HashSet<List<String>>(q.getResultList());
+    }
+    
     
     private Set<List<String>> getDerivedFrom() {
         
-        Query q = em.createQuery("FROM BioSample bs INNER JOIN bs.propertyValues AS pv INNER JOIN pv.type AS pt WITH pt = 'Derived From'");
+        Query q = em.createQuery("FROM BioSample bs INNER JOIN bs.propertyValues AS pv INNER JOIN pv.type AS pt WHERE pt = 'Derived From'");
         
         List<BioSample> results = q.getResultList();
         Set<List<String>> toReturn = new HashSet<List<String>>();
@@ -81,7 +95,7 @@ public class RelationshipInverter extends AbstractDriver {
     
     private Set<List<String>> getDerivedTo() {
         
-        Query q = em.createQuery("FROM BioSample bs INNER JOIN bs.propertyValues AS pv INNER JOIN pv.type AS pt WITH pt = 'Derived To'");
+        Query q = em.createQuery("FROM BioSample bs INNER JOIN bs.propertyValues AS pv INNER JOIN pv.type AS pt WHERE pt = 'Derived To'");
         
         List<BioSample> results = q.getResultList();
         Set<List<String>> toReturn = new HashSet<List<String>>();
