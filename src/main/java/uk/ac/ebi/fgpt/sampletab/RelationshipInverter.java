@@ -72,6 +72,20 @@ public class RelationshipInverter extends AbstractDriver {
             }
         }
         
+        //rollback the transaction
+        if (rollback) 
+            transaction.rollback();
+        else {
+            transaction.commit();
+        }
+        
+        //start a new transaction
+        
+        transaction = em.getTransaction();
+        transaction.begin();
+        //mark as only temporary if appropriate
+        if (rollback) transaction.setRollbackOnly();
+        
         //get all derived to without an inverse
         for (String[] derivedTo : getDerivedToWithoutInverse() ) {
             //TODO delete the derived to       
