@@ -27,6 +27,9 @@ public class RelationshipInverter extends AbstractDriver {
 
     @Option(name = "--max", aliases = { "-m" }, usage = "maximum number of attributes to create/delete at once")
     protected int maxCount = 1000;
+
+    @Option(name = "--rollback", aliases = { "-r" }, usage = "rollback database modifications")
+    protected boolean rollback = false;
     
     private EntityManager em = null;
     
@@ -43,8 +46,8 @@ public class RelationshipInverter extends AbstractDriver {
         
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
-        //TEMP mark as only temporary
-        transaction.setRollbackOnly();
+        //mark as only temporary if appropriate
+        if (rollback) transaction.setRollbackOnly();
 
 //        Set<List<String>> derivedFroms = getDerivedFrom();
 //        Set<List<String>> derivedTos = getDerivedFrom();
@@ -84,8 +87,12 @@ public class RelationshipInverter extends AbstractDriver {
             biosampleDAO.mergeBean(bs);
         }
         
-        //TEMP rollback the transaction
-        transaction.rollback();
+        //rollback the transaction
+        if (rollback) 
+            transaction.rollback();
+        else {
+            transaction.commit();
+        }
         
         em.close();
     }
