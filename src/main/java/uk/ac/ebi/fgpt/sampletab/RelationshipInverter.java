@@ -42,6 +42,7 @@ public class RelationshipInverter extends AbstractDriver {
         em = Resources.getInstance().getEntityManagerFactory().createEntityManager();
         
         EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
         //TEMP mark as only temporary
         transaction.setRollbackOnly();
 
