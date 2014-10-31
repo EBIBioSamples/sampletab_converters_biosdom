@@ -54,7 +54,7 @@ public class RelationshipInverter extends AbstractDriver {
         //get all derived from without an inverse
         for (String[] derivedFrom : getDerivedFromWithoutInverse() ) {
             //TODO create the inverses       
-            log.info("TODO create "+derivedFrom[1]+" -> "+derivedFrom[0]);
+            log.info("creating "+derivedFrom[1]+" -> "+derivedFrom[0]);
             
             SampleCommentValue v = new SampleCommentValue(derivedFrom[0], new SampleCommentType(DERIVEDTO));
             
@@ -71,7 +71,7 @@ public class RelationshipInverter extends AbstractDriver {
         //get all derived to without an inverse
         for (String[] derivedTo : getDerivedToWithoutInverse() ) {
             //TODO delete the derived to       
-            log.info("TODO delete "+derivedTo[1]+" <- "+derivedTo[0]);
+            log.info("deleting "+derivedTo[1]+" <- "+derivedTo[0]);
                         
             BioSample bs = biosampleDAO.find(derivedTo[1]);
             for (ExperimentalPropertyValue v : Collections.unmodifiableCollection(bs.getPropertyValues())) {
