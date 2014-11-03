@@ -1,5 +1,5 @@
 #!/bin/sh
 
-./run.sh uk.ac.ebi.fgpt.sampletab.DeletedListDriver "$@"
+${0%/*}/run.sh uk.ac.ebi.fgpt.sampletab.DeletedListDriver "$@"
 
 exit $?
