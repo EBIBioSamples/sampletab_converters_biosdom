@@ -91,9 +91,9 @@ public class RelationshipInverter extends AbstractDriver {
             //TODO delete the derived to       
             log.info("deleting "+derivedTo[1]+" <- "+derivedTo[0]);
                         
-            BioSample bs = biosampleDAO.find(derivedTo[1]);
+            BioSample bs = biosampleDAO.find(derivedTo[0]);
             for (ExperimentalPropertyValue v : Collections.unmodifiableCollection(bs.getPropertyValues())) {
-                if (v.getTermText().equals(derivedTo[0]) && v.getType().getTermText().equals(DERIVEDTO)) {
+                if (v.getTermText().equals(derivedTo[1]) && v.getType().getTermText().equals(DERIVEDTO)) {
                     bs.getPropertyValues().remove(v);
                 }
             }
