@@ -3,6 +3,7 @@ package uk.ac.ebi.fgpt.sampletab;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -92,9 +93,12 @@ public class RelationshipInverter extends AbstractDriver {
             log.info("deleting "+derivedTo[1]+" <- "+derivedTo[0]);
                         
             BioSample bs = biosampleDAO.find(derivedTo[0]);
-            for (ExperimentalPropertyValue v : Collections.unmodifiableCollection(bs.getPropertyValues())) {
+            Iterator<ExperimentalPropertyValue> i = bs.getPropertyValues().iterator();
+            
+            while (i.hasNext()) {
+                ExperimentalPropertyValue v = i.next();
                 if (v.getTermText().equals(derivedTo[1]) && v.getType().getTermText().equals(DERIVEDTO)) {
-                    bs.getPropertyValues().remove(v);
+                    i.remove();
                 }
             }
             
