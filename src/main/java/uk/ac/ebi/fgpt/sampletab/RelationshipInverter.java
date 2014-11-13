@@ -159,12 +159,7 @@ public class RelationshipInverter extends AbstractDriver {
     }
     
     private Set<String[]> getDerivedToWithoutInverse() {
-        
-        Query q = em.createQuery("SELECT bs1.acc, str(pv1.termText) " +
-                "FROM BioSample bs1 INNER JOIN bs1.propertyValues AS pv1 INNER JOIN pv1.type AS pt1 " +
-                "WHERE pt1.termText = 'Derived To' AND bs1.acc NOT IN " +
-                "( SELECT str(pv2.termText) FROM BioSample bs2 INNER JOIN bs2.propertyValues AS pv2 INNER JOIN pv2.type AS pt2 " +
-                "WHERE pt2.termText = 'Derived From' )");
+        Query q = em.createQuery("SELECT bs1.acc, str(pv1.termText) FROM BioSample bs1 INNER JOIN bs1.propertyValues AS pv1 INNER JOIN pv1.type AS pt1 WHERE pt1.termText = 'Derived To' AND bs1.acc NOT IN ( SELECT str(pv2.termText) FROM BioSample bs2 INNER JOIN bs2.propertyValues AS pv2 INNER JOIN pv2.type AS pt2 WHERE pt2.termText = 'Derived From' )");
         
         q.setMaxResults(maxCount);
         
