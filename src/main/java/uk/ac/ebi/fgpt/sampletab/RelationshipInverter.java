@@ -117,11 +117,7 @@ public class RelationshipInverter extends AbstractDriver {
     
     private Set<String[]> getDerivedFromWithoutInverse() {
         
-        Query q = em.createQuery("SELECT bs1.acc, str(pv1.termText) " +
-        		"FROM BioSample bs1 INNER JOIN bs1.propertyValues AS pv1 INNER JOIN pv1.type AS pt1 " +
-        		"WHERE pt1.termText = 'Derived From' AND bs1.acc NOT IN " +
-        		"( SELECT str(pv2.termText) FROM BioSample bs2 INNER JOIN bs2.propertyValues AS pv2 INNER JOIN pv2.type AS pt2 " +
-        		"WHERE pt2.termText = 'Derived To' )");
+        Query q = em.createQuery("SELECT bs1.acc, str(substr(pv1.termText, 0, 15)) FROM BioSample bs1 JOIN bs1.propertyValues AS pv1 JOIN pv1.type AS pt1 WHERE pt1.termText = 'Derived From' AND bs1.acc NOT IN ( SELECT str(substr(pv2.termText, 0, 15)) FROM BioSample bs2 JOIN bs2.propertyValues AS pv2 JOIN pv2.type AS pt2 WHERE pt2.termText = 'Derived To' AND bs2.acc = str(substr(pv1.termText, 0, 15)))");
         
         q.setMaxResults(maxCount);
         
@@ -159,7 +155,7 @@ public class RelationshipInverter extends AbstractDriver {
     }
     
     private Set<String[]> getDerivedToWithoutInverse() {
-        Query q = em.createQuery("SELECT bs1.acc, str(pv1.termText) FROM BioSample bs1 INNER JOIN bs1.propertyValues AS pv1 INNER JOIN pv1.type AS pt1 WHERE pt1.termText = 'Derived To' AND bs1.acc NOT IN ( SELECT str(pv2.termText) FROM BioSample bs2 INNER JOIN bs2.propertyValues AS pv2 INNER JOIN pv2.type AS pt2 WHERE pt2.termText = 'Derived From' )");
+        Query q = em.createQuery("SELECT bs1.acc, str(substr(pv1.termText, 0, 15)) FROM BioSample bs1 JOIN bs1.propertyValues AS pv1 JOIN pv1.type AS pt1 WHERE pt1.termText = 'Derived To' AND bs1.acc NOT IN ( SELECT str(substr(pv2.termText, 0, 15)) FROM BioSample bs2 JOIN bs2.propertyValues AS pv2 JOIN pv2.type AS pt2 WHERE pt2.termText = 'Derived From' AND bs2.acc = str(substr(pv1.termText, 0, 15)))");
         
         q.setMaxResults(maxCount);
         
