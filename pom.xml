@@ -21,7 +21,7 @@
 	<!-- Git connection -->
 	<scm>
 		<connection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</connection>
-        <developerConnection>scm:git:git@github.com:EBIBioSamples/biosd_common.git/sampletab_converters_biosdom.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
