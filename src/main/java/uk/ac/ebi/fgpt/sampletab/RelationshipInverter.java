@@ -110,10 +110,14 @@ public class RelationshipInverter extends AbstractDriver {
         }
         
         //rollback the transaction
-        if (rollback) 
-            transaction.rollback();
-        else {
-            transaction.commit();
+        if (rollback) {
+        	log.info("rolling back transaction");
+	        transaction.rollback();
+	    	log.info("rolled back transaction");
+	    } else {
+	    	log.info("commiting transaction");
+	        transaction.commit();
+	    	log.info("commited transaction");
         }
         
         em.close();
