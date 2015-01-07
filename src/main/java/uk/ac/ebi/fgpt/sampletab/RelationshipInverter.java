@@ -2,6 +2,7 @@ package uk.ac.ebi.fgpt.sampletab;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.fg.biosd.model.expgraph.BioSample;
 import uk.ac.ebi.fg.biosd.model.expgraph.properties.SampleCommentType;
 import uk.ac.ebi.fg.biosd.model.expgraph.properties.SampleCommentValue;
+import uk.ac.ebi.fg.biosd.model.organizational.MSI;
 import uk.ac.ebi.fg.core_model.expgraph.properties.ExperimentalPropertyType;
 import uk.ac.ebi.fg.core_model.expgraph.properties.ExperimentalPropertyValue;
 import uk.ac.ebi.fg.core_model.persistence.dao.hibernate.toplevel.AccessibleDAO;
@@ -54,6 +56,7 @@ public class RelationshipInverter extends AbstractDriver {
 //        Set<List<String>> derivedTos = getDerivedFrom();
         
         AccessibleDAO<BioSample> biosampleDAO = new AccessibleDAO<BioSample>(BioSample.class, em);
+        AccessibleDAO<MSI> msiDAO = new AccessibleDAO<MSI>(MSI.class, em);
         
         
         //get all derived from without an inverse
@@ -70,6 +73,13 @@ public class RelationshipInverter extends AbstractDriver {
                 bs.addPropertyValue(v);
                 
                 biosampleDAO.mergeBean(bs);
+                
+                //update the update date for the msi(s) containing this submission
+                Date updateDate = new Date();
+                for(MSI msi : bs.getMSIs()) {
+                	msi.setUpdateDate(updateDate);
+                	msiDAO.mergeBean(msi);
+                }
             }
         }
         
@@ -107,6 +117,13 @@ public class RelationshipInverter extends AbstractDriver {
             }
             
             biosampleDAO.mergeBean(bs);
+            
+            //update the update date for the msi(s) containing this submission
+            Date updateDate = new Date();
+            for(MSI msi : bs.getMSIs()) {
+            	msi.setUpdateDate(updateDate);
+            	msiDAO.mergeBean(msi);
+            }
         }
         
         //rollback the transaction
