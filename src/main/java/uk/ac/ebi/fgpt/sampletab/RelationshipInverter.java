@@ -58,6 +58,7 @@ public class RelationshipInverter extends AbstractDriver {
         AccessibleDAO<BioSample> biosampleDAO = new AccessibleDAO<BioSample>(BioSample.class, em);
         AccessibleDAO<MSI> msiDAO = new AccessibleDAO<MSI>(MSI.class, em);
         
+        Date now = new Date();
         
         //get all derived from without an inverse
         for (String[] derivedFrom : getDerivedFromWithoutInverse() ) {
@@ -72,9 +73,13 @@ public class RelationshipInverter extends AbstractDriver {
             } else {
                 bs.addPropertyValue(v);
                 
+                //update the updatedate of the sample
+                bs.setUpdateDate(now);
+                
                 biosampleDAO.mergeBean(bs);
                 
                 //update the update date for the msi(s) containing this submission
+                //TODO review this
                 Date updateDate = new Date();
                 for(MSI msi : bs.getMSIs()) {
                 	msi.setUpdateDate(updateDate);
@@ -113,6 +118,8 @@ public class RelationshipInverter extends AbstractDriver {
                 ExperimentalPropertyValue v = i.next();
                 if (v.getTermText().equals(derivedTo[1]) && v.getType().getTermText().equals(DERIVEDTO)) {
                     i.remove();
+                    //update the updatedate of the sample
+                    bs.setUpdateDate(now);
                 }
             }
             
