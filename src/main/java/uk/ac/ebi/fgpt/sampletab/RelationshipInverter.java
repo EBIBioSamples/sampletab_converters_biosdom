@@ -125,12 +125,14 @@ public class RelationshipInverter extends AbstractDriver {
             
             biosampleDAO.mergeBean(bs);
             
+            /*
             //update the update date for the msi(s) containing this submission
             Date updateDate = new Date();
             for(MSI msi : bs.getMSIs()) {
             	msi.setUpdateDate(updateDate);
             	msiDAO.mergeBean(msi);
             }
+            */
         }
         
         //rollback the transaction
