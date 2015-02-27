@@ -176,7 +176,7 @@ public class RelationshipInverter extends AbstractDriver {
         Set<List<String>> toReturn = new HashSet<List<String>>();
         for (BioSample bs : results) {
             for (ExperimentalPropertyValue<ExperimentalPropertyType> pv : bs.getPropertyValues()) {
-                if (pv.getType().getTermText().equals("Derived From")) {
+                if (pv.getType().getTermText().equals(DERIVEDFROM)) {
                     List<String> pair = new ArrayList<String>(2);
                     pair.set(0, bs.getAcc());
                     pair.set(1, pv.getTermText());
@@ -213,7 +213,7 @@ public class RelationshipInverter extends AbstractDriver {
         Set<List<String>> toReturn = new HashSet<List<String>>();
         for (BioSample bs : results) {
             for (ExperimentalPropertyValue<ExperimentalPropertyType> pv : bs.getPropertyValues()) {
-                if (pv.getType().getTermText().equals("Derived To")) {
+                if (pv.getType().getTermText().equals(DERIVEDTO)) {
                     List<String> pair = new ArrayList<String>(2);
                     pair.set(0, bs.getAcc());
                     pair.set(1, pv.getTermText());
