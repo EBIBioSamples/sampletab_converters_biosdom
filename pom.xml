@@ -128,7 +128,7 @@
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
 					<artifactId>sampletab-converters</artifactId>
-					<version>1.0.17-SNAPSHOT</version>
+					<version>1.0.18-SNAPSHOT</version>
 					<exclusions>
 						<exclusion>
 							<groupId>net.sourceforge.fluxion</groupId>
@@ -180,7 +180,7 @@
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
 					<artifactId>sampletab-converters</artifactId>
-					<version>1.0.16</version>
+					<version>1.0.17</version>
 					<exclusions>
 						<exclusion>
 							<groupId>net.sourceforge.fluxion</groupId>
@@ -225,7 +225,7 @@
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
 					<artifactId>sampletab-converters</artifactId>
-					<version>1.0.17-SNAPSHOT</version>
+					<version>1.0.18-SNAPSHOT</version>
 					<exclusions>
 						<exclusion>
 							<groupId>net.sourceforge.fluxion</groupId>
