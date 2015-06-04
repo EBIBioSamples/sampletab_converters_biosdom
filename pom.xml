@@ -148,7 +148,7 @@
 				<dependency>
 					<groupId>uk.ac.ebi.fg</groupId>
 					<artifactId>biosd_model</artifactId>
-					<version>2.2.2-SNAPSHOT</version>
+					<version>3.0.1-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -200,7 +200,7 @@
 				<dependency>
 					<groupId>uk.ac.ebi.fg</groupId>
 					<artifactId>biosd_model</artifactId>
-					<version>2.2</version>
+					<version>3.0</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -244,7 +244,7 @@
 				<dependency>
 					<groupId>uk.ac.ebi.fg</groupId>
 					<artifactId>biosd_model</artifactId>
-					<version>2.2.2-SNAPSHOT</version>
+					<version>3.0.1-SNAPSHOT</version>
 					
 			        <exclusions>
 			            <exclusion>
