@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>uk.ac.ebi.fg.biosd</groupId>
 		<artifactId>biosd_common</artifactId>
-		<version>1.2</version>
+		<version>1.4.1-SNAPSHOT</version>
 	</parent>
 	
 	<properties>
@@ -96,6 +96,17 @@
 			<artifactId>zooma-client</artifactId>
 			<groupId>uk.ac.ebi.fgpt</groupId>
 			<version>2.0-SNAPSHOT</version>
+			<exclusions>
+				<!-- Zooma uses an older version of spring -->
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hibernate-jpa-2.1-api</artifactId>
+					<groupId>org.hibernate.javax.persistence</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
 		<!--  override version from parent -->
@@ -104,7 +115,7 @@
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3</version>
 		</dependency>
-
+		
 	</dependencies>
 
 	<profiles>
@@ -204,61 +215,6 @@
 				</dependency>
 			</dependencies>
 		</profile>
-		
-		<!-- profile for disease spine, uses files from resources-spine -->
-		<profile>
-			<id>spine</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>ebi-repo-snapshots</id>
-					<name>EBI Repo Snapshots</name>
-					<url>http://www.ebi.ac.uk/~maven/m2repo_snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
-			<dependencies>
-				<dependency>
-					<groupId>uk.ac.ebi.fgpt</groupId>
-					<artifactId>sampletab-converters</artifactId>
-					<version>1.0.18-SNAPSHOT</version>
-					<exclusions>
-						<exclusion>
-							<groupId>net.sourceforge.fluxion</groupId>
-							<artifactId>fluxion-spi</artifactId>
-						</exclusion>
-					</exclusions>
-				</dependency>
-				
-				<dependency>
-					<groupId>net.sourceforge.fluxion</groupId>
-					<artifactId>fluxion-spi</artifactId>
-					<version>1.0-alpha-3</version>
-				</dependency>
-
-				<!--Biosd Model for Jobs-registry subs tracking -->
-				<dependency>
-					<groupId>uk.ac.ebi.fg</groupId>
-					<artifactId>biosd_model</artifactId>
-					<version>3.0.1-SNAPSHOT</version>
-					
-			        <exclusions>
-			            <exclusion>
-						    <groupId>org.jboss.logging</groupId>
-						    <artifactId>jboss-logging</artifactId>
-			            </exclusion>
-			            <exclusion>
-							<groupId>commons-logging</groupId>
-							<artifactId>commons-logging</artifactId>
-			            </exclusion>
-			        </exclusions>
-				</dependency>
-			</dependencies>
-		</profile>
 	</profiles>
 
 	<build>
@@ -297,4 +253,14 @@
 			</resource>
 		</resources>
 	</build>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>4.0.5.RELEASE</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
