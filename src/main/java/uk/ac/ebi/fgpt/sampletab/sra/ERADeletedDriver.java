@@ -18,10 +18,11 @@ import uk.ac.ebi.fgpt.sampletab.AbstractDriver;
 public class ERADeletedDriver extends AbstractDriver {
 
     
-    protected ERADAO eraDom = new ERADAO();
+    protected ERADAO eraDao = new ERADAO();
     
     private Logger log = LoggerFactory.getLogger(getClass());
     
+    private Date now = new Date();
     
 	public ERADeletedDriver() {
 		
@@ -32,14 +33,14 @@ public class ERADeletedDriver extends AbstractDriver {
         super.doMain(args);
 
     	try {
-			eraDom.setup();
+			eraDao.setup();
 		} catch (ClassNotFoundException e) {
 			log.error("Unable to find oracle driver", e);
 			return;
 		}
     	
     	//this is a list of all deleted things in ERA
-    	List<String> deletedSamples = eraDom.getPrivateSamples();
+    	List<String> deletedSamples = eraDao.getPrivateSamples();
     	
 
         EntityManager em = Resources.getInstance().getEntityManagerFactory().createEntityManager();
@@ -82,6 +83,8 @@ public class ERADeletedDriver extends AbstractDriver {
 		        	//so we make it private
 		        	log.info("Discovered that "+biosampleAccession+" needs to be made private");
 		        	bioSample.setPublicFlag(false);
+		        	//since we changed something, mark it in the update date
+                    bioSample.setUpdateDate(now);
 		
 		        	//persist it back into the database
 		            biosampleDAO.mergeBean(bioSample);
