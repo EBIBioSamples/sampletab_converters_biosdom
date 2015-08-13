@@ -198,7 +198,7 @@ public class NCBIDeletedDriver extends AbstractDriver{
         transaction.commit();
         log.info("Closing entity manager");
         em.close();
-        
+        log.info("Closed entity manager");
     }
 
 	public static void main(String[] args) {
