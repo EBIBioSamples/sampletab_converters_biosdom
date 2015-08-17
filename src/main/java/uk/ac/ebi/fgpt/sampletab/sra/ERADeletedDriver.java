@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import org.slf4j.Logger;
@@ -42,8 +43,8 @@ public class ERADeletedDriver extends AbstractDriver {
     	//this is a list of all deleted things in ERA
     	List<String> deletedSamples = eraDao.getPrivateSamples();
     	
-
-        EntityManager em = Resources.getInstance().getEntityManagerFactory().createEntityManager();
+		EntityManagerFactory emf = Resources.getInstance().getEntityManagerFactory(); 
+        EntityManager em = emf.createEntityManager();
         
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
@@ -95,9 +96,13 @@ public class ERADeletedDriver extends AbstractDriver {
         }
         log.info("Commiting transaction");
         transaction.commit();
+        log.info("Commited transaction");
         log.info("Closing entity manager");
         em.close();
         log.info("Closed entity manager");
+        log.info("Closing entity manager factory");
+        emf.close();
+        log.info("Closed entity manager factory");
     }
 
 	public static void main(String[] args) {

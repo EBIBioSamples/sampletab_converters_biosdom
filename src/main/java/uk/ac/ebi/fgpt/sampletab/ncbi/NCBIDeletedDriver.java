@@ -14,6 +14,7 @@ import java.util.concurrent.Future;
 import java.util.zip.GZIPInputStream;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.xml.parsers.ParserConfigurationException;
@@ -139,8 +140,8 @@ public class NCBIDeletedDriver extends AbstractDriver{
 		//at this point, there is a list of public NCBI accessions
 		
 		//check each copy of an NCBI accession in EBI and see if it is public
-
-        EntityManager em = Resources.getInstance().getEntityManagerFactory().createEntityManager();
+		EntityManagerFactory emf = Resources.getInstance().getEntityManagerFactory();
+        EntityManager em = emf.createEntityManager();
 
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
@@ -196,9 +197,13 @@ public class NCBIDeletedDriver extends AbstractDriver{
         }
         log.info("Commiting transaction");
         transaction.commit();
+        log.info("Commited transaction");
         log.info("Closing entity manager");
         em.close();
         log.info("Closed entity manager");
+        log.info("Closing entity manager factory");
+        emf.close();
+        log.info("Closed entity manager factory");
     }
 
 	public static void main(String[] args) {
