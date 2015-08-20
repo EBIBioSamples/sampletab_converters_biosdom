@@ -4,7 +4,7 @@
 
 	<groupId>uk.ac.ebi.fgpt</groupId>
 	<artifactId>sampletab_converters_biosdom</artifactId>
-	<version>1.0.6</version>
+	<version>1.0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<parent>
@@ -21,7 +21,7 @@
 	<scm>
 		<connection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</connection>
         <developerConnection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</developerConnection>
-		<tag>v1.0.6</tag>
+		<tag>v1.0.1</tag>
 	</scm>
 
 	<repositories>
