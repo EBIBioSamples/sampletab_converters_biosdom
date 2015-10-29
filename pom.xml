@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>uk.ac.ebi.fgpt</groupId>
 	<artifactId>sampletab_converters_biosdom</artifactId>
 	<version>1.0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	
+
 	<parent>
 		<groupId>uk.ac.ebi.fg.biosd</groupId>
 		<artifactId>biosd_common</artifactId>
-		<version>1.4.1-SNAPSHOT</version>
+		<version>2.0-SNAPSHOT</version>
 	</parent>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -20,17 +21,11 @@
 	<!-- Git connection -->
 	<scm>
 		<connection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</connection>
-        <developerConnection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</developerConnection>
+		<developerConnection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</developerConnection>
 		<tag>v1.0.1</tag>
 	</scm>
 
 	<repositories>
-		<repository>
-			<id>oerc-repo</id>
-			<name>OeRC Maven repository</name>
-			<url>http://frog.oerc.ox.ac.uk:8080/nexus-2.1.2/content/repositories/releases/</url>
-		</repository>
-
 		<repository>
 			<id>ebi-repo</id>
 			<name>EBI Repository</name>
@@ -53,14 +48,6 @@
 		</repository>
 
 		<repository>
-			<id>hasbanana-repo</id>
-			<url>http://www.hasbanana.com/maven/repo</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-
-		<repository>
 			<id>coconut.ebi.ac.uk-snapshots</id>
 			<url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo</url>
 			<snapshots>
@@ -75,7 +62,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -90,7 +76,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 		</dependency>
-		
+
 		<!-- zooma -->
 		<dependency>
 			<artifactId>zooma-client</artifactId>
@@ -108,14 +94,14 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
-		<!--  override version from parent -->
+
+		<!-- override version from parent -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<profiles>
@@ -139,27 +125,13 @@
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
 					<artifactId>sampletab-converters</artifactId>
-					<version>1.0.22-SNAPSHOT</version>
-					<exclusions>
-						<exclusion>
-							<groupId>net.sourceforge.fluxion</groupId>
-							<artifactId>fluxion-spi</artifactId>
-						</exclusion>
-					</exclusions>
+					<version>1.0.24-SNAPSHOT</version>
 				</dependency>
-				
-				<dependency>
-					<groupId>net.sourceforge.fluxion</groupId>
-					<artifactId>fluxion-spi</artifactId>
-					<version>1.0-alpha-3</version>
-				</dependency>
-				
 
 				<!--Biosd Model for Jobs-registry subs tracking -->
 				<dependency>
 					<groupId>uk.ac.ebi.fg</groupId>
 					<artifactId>biosd_model</artifactId>
-					<version>3.0.1-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -176,7 +148,8 @@
 					<name>EBI repo</name>
 					<url>http://www.ebi.ac.uk/~maven/m2repo</url>
 				</repository>
-				<!-- production versions currently depends on snapshots, so need snapshot repo too -->
+				<!-- production versions currently depends on snapshots, so need snapshot 
+					repo too -->
 				<repository>
 					<id>ebi-repo-snapshots</id>
 					<name>EBI Repo Snapshots</name>
@@ -186,26 +159,13 @@
 					</snapshots>
 				</repository>
 			</repositories>
-			
+
 			<dependencies>
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
 					<artifactId>sampletab-converters</artifactId>
-					<version>1.0.21</version>
-					<exclusions>
-						<exclusion>
-							<groupId>net.sourceforge.fluxion</groupId>
-							<artifactId>fluxion-spi</artifactId>
-						</exclusion>
-					</exclusions>
+					<version>1.0.23</version>
 				</dependency>
-				
-				<dependency>
-					<groupId>net.sourceforge.fluxion</groupId>
-					<artifactId>fluxion-spi</artifactId>
-					<version>1.0-alpha-3</version>
-				</dependency>
-				
 
 				<!--Biosd Model for Jobs-registry subs tracking -->
 				<dependency>
@@ -245,7 +205,7 @@
 				<version>2.4.1</version>
 			</plugin>
 		</plugins>
-		
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -253,7 +213,7 @@
 			</resource>
 		</resources>
 	</build>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
