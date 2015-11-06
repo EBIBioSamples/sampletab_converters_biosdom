@@ -22,31 +22,9 @@
 	<scm>
 		<connection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</connection>
 		<developerConnection>scm:git:git@github.com:EBIBioSamples/sampletab_converters_biosdom.git</developerConnection>
-		<tag>v1.0.1</tag>
 	</scm>
 
 	<repositories>
-		<repository>
-			<id>ebi-repo</id>
-			<name>EBI Repository</name>
-			<url>http://www.ebi.ac.uk/~maven/m2repo/</url>
-		</repository>
-
-		<repository>
-			<id>ebi-repo-snapshot</id>
-			<name>EBI Repository</name>
-			<url>http://www.ebi.ac.uk/~maven/m2repo_snapshots/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-
-		<repository>
-			<id>limpopo-repo</id>
-			<name>Limpopo Mini-SF Repository</name>
-			<url>http://limpopo.sourceforge.net/maven/repo</url>
-		</repository>
-
 		<repository>
 			<id>coconut.ebi.ac.uk-snapshots</id>
 			<url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo</url>
@@ -111,16 +89,6 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			<repositories>
-				<repository>
-					<id>ebi-repo-snapshots</id>
-					<name>EBI Repo Snapshots</name>
-					<url>http://www.ebi.ac.uk/~maven/m2repo_snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
 			<dependencies>
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
@@ -142,29 +110,12 @@
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-			<repositories>
-				<repository>
-					<id>ebi-repo</id>
-					<name>EBI repo</name>
-					<url>http://www.ebi.ac.uk/~maven/m2repo</url>
-				</repository>
-				<!-- production versions currently depends on snapshots, so need snapshot 
-					repo too -->
-				<repository>
-					<id>ebi-repo-snapshots</id>
-					<name>EBI Repo Snapshots</name>
-					<url>http://www.ebi.ac.uk/~maven/m2repo_snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
 
 			<dependencies>
 				<dependency>
 					<groupId>uk.ac.ebi.fgpt</groupId>
 					<artifactId>sampletab-converters</artifactId>
-					<version>1.0.23</version>
+					<version>1.0.24</version>
 				</dependency>
 
 				<!--Biosd Model for Jobs-registry subs tracking -->
@@ -185,8 +136,8 @@
 				<version>3.3</version>
 				<configuration>
 					<fork>true</fork>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>

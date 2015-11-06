@@ -52,7 +52,7 @@ public class ERADeletedDriver extends AbstractDriver {
         AccessibleDAO<BioSample> biosampleDAO = new AccessibleDAO<BioSample>(BioSample.class, em); 
         for (String biosampleAccession : deletedSamples) {
         	
-        	log.info("Checking "+biosampleAccession);
+        	log.trace("Checking "+biosampleAccession);
         	
         	boolean isPublic = false;
         	//get the sample object from hibernate
