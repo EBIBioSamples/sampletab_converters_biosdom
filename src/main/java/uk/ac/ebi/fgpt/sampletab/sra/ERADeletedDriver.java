@@ -59,25 +59,7 @@ public class ERADeletedDriver extends AbstractDriver {
         	BioSample bioSample = biosampleDAO.find(biosampleAccession);
         	//check if it was a valid object
         	if (bioSample != null) {
-	        	if ((bioSample.getPublicFlag() != null && bioSample.getPublicFlag() == true ) ) {
-	        		//the sample itself is public
-	        		isPublic = true;
-	        	} else if (bioSample.getReleaseDate() != null && bioSample.getReleaseDate().before(new Date())) {
-	        		//the samples release date is in the past
-	        		isPublic = true;
-	        	} else {
-	        		//the submission may be public, even if the sample is not set to public
-	        		//have to handle the legacy of multiple owner MSIs
-	        		for (MSI msi : bioSample.getMSIs()) {
-	        			if (msi.getPublicFlag() != null && msi.getPublicFlag() == true) {
-	        				//the MSI itself is flagged as public
-	        				isPublic = true;
-	        			} else if (msi.getReleaseDate() != null && msi.getReleaseDate().before(new Date())) {
-	        				//the MSI has a release date in the past
-	        				isPublic = true;	        				
-	        			}
-	        		}
-	        	}
+	        	bioSample.isPublic();
 	        	
 	        	if (isPublic) {
 		        	//this is a sample that is public, from a source that says it should be private
