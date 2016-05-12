@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>uk.ac.ebi.fgpt</groupId>
 			<artifactId>sampletab-converters</artifactId>
-			<version>1.0.26</version>
+			<version>1.0.27</version>
 		</dependency>
 
 		<!--Biosd Model for Jobs-registry subs tracking -->
