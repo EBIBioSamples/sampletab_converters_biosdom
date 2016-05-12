@@ -1,0 +1,30 @@
+
+hibernate.connection.username=USERNAME
+hibernate.connection.password=PASSWORD
+hibernate.connection.url=jdbc:oracle:thin:@HOSTNAME:PORT:DATABASE
+
+hibernate.connection.driver_class=oracle.jdbc.driver.OracleDriver
+hibernate.dialect=org.hibernate.dialect.Oracle10gDialect
+hibernate.hbm2ddl.auto=
+hibernate.connection.autocommit=false
+hibernate.jdbc.batch_size=50
+hibernate.show_sql=false
+hibernate.jdbc.use_scrollable_resultset=true
+hibernate.jdbc.wrap_result_sets=true
+
+# C3P0 configurations
+#Initial number of database connections
+hibernate.c3p0.min_size=1
+#Maximum number of database connections to open
+hibernate.c3p0.max_size=25
+#Number of connections in a clump acquired when pool is exhausted
+hibernate.c3p0.acquire_increment=1
+#Maximum size of c3p0 statement cache (0 to turn off)
+hibernate.c3p0.max_statements=256
+#Maximum idle time for a connection (in seconds)
+hibernate.c3p0.timeout=900
+#Idle time before a c3p0 pooled connection is validated (in seconds)
+#Must be less than hibernate.c3p0.timeout
+hibernate.c3p0.idle_test_period=600
+#Validate the connection on checkout. Consider setting the hibernate.c3p0.idle_test_period property instead. Defaults to false
+hibernate.c3p0.validate=false
